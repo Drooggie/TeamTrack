@@ -1,0 +1,14 @@
+created:
+    - app/Http/Controllers/DepartmentController.php
+    - tests/Feature/Http/Controllers/DepartmentControllerTest.php
+    - app/Http/Requests/DepartmentStoreRequest.php
+    - app/Http/Requests/DepartmentUpdateRequest.php
+    - resources/views/department/index.blade.php
+    - resources/views/department/create.blade.php
+    - resources/views/department/show.blade.php
+    - resources/views/department/edit.blade.php
+updated:
+    - routes/web.php
+models:
+    Department: { uuid: uuid, name: 'string:50', description: longtext, relationships: { hasMany: Employee } }
+    Employee: { uuid: uuid, full_name: 'string:100', email: 'string:100 index', department_id: 'id foreign', job_title: 'string:50', payment_type: 'string:20', salary: 'integer unsigned nullable', hourly_rate: 'integer unsigned nullable', relationships: { hasMany: 'Paycheck, Timelogs', belongsTo: Department } }

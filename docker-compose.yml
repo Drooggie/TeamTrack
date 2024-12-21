@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: teamtrack-db
+    ports:
+      - 3333:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: teamtrack
+      MYSQL_PASSWORD: secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - teamtrack_network
+
+  app:
+    build:
+      dockerfile: Dockerfile
+    container_name: teamtrack_app
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: teamtrack
+      DB_USERNAME: root
+      DB_PASSWORD: secret
+    working_dir: /var/www
+    volumes:
+      - ./src:/var/www
+    networks:
+      - teamtrack_network
+    depends_on:
+      - mysql
+
+  nginx:
+    image: nginx:alpine
+    container_name: teamtrack_nginx
+    volumes:
+      - ./src:/var/www
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - "8888:80"
+    networks:
+      - teamtrack_network
+    depends_on:
+      - app
+
+  redis:
+    image: redis:latest
+    container_name: teamtrack_redis
+    ports:
+      - 6382:6379
+    networks:
+      - teamtrack_network
+    volumes:
+      - redis-data:/data
+
+volumes:
+  mysql-data:
+  redis-data:
+
+
+networks:
+  teamtrack_network:
