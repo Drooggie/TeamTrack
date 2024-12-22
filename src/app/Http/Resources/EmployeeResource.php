@@ -2,28 +2,33 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use TiMacDonald\JsonApi\JsonApiResource;
 use TiMacDonald\JsonApi\Link;
 
-class DepartmentResource extends JsonApiResource
+class EmployeeResource extends JsonApiResource
 {
     public array $attributes = [
-        'name',
-        'description',
+        'full_name',
+        'email',
+        'department_id',
+        'job_title',
+        'payment_type',
+        'salary'
     ];
 
     public function toRelationships(Request $request)
     {
         return [
-            'employees' => fn() => EmployeeResource::collection($this->employees)
+            'department' => DepartmentResource::make($this->department),
         ];
     }
 
     public function toLinks(Request $request)
     {
         return [
-            Link::self(route('v1.departments.show', $this->uuid)),
+            Link::self(route('v1.employees.show', $this->uuid))
         ];
     }
 }

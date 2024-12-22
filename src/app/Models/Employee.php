@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentTypes;
 use App\Models\Concerns\HasUuid;
+use App\Payments\PaymentType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employee extends Model
 {
@@ -37,6 +38,7 @@ class Employee extends Model
     protected $casts = [
         'id' => 'integer',
         'department_id' => 'integer',
+        'payment_type' => PaymentTypes::class,
     ];
 
     // public function paychecks(): HasMany
@@ -52,5 +54,11 @@ class Employee extends Model
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function getPaymentTypeAttribute(): PaymentType
+    {
+        return PaymentTypes::from($this->original['payment_type'])
+            ->makePaymentType($this);
     }
 }
