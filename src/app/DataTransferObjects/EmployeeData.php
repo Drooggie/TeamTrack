@@ -11,7 +11,8 @@ class EmployeeData
         public readonly string $email,
         public readonly int $department_id,
         public readonly string $job_title,
-        public readonly PaymentTypes $payment_type,
-        public readonly int $salary
+        public readonly string $payment_type,
+        public readonly ?int $salary,
+        // public readonly ?int $hourly_rate
     ) {}
 }

@@ -9,14 +9,25 @@ use TiMacDonald\JsonApi\Link;
 
 class EmployeeResource extends JsonApiResource
 {
-    public array $attributes = [
-        'full_name',
-        'email',
-        'department_id',
-        'job_title',
-        'payment_type',
-        'salary'
-    ];
+
+    public function toAttributes(Request $request)
+    {
+        return [
+            'full_name' => $this->full_name,
+            'email' => $this->email,
+            'department_id' => $this->department_id,
+            'job_title' => $this->job_title,
+            'payment_type' => [
+                'type' => $this->payment_type->type(),
+                'amount' => [
+                    'cent' => $this->payment_type->amount(),
+                    'montly' => $this->payment_type->monthlyAmount()
+                ]
+            ],
+            'salary' => $this->salary,
+            'hourly_rate' => $this->hourly_rate
+        ];
+    }
 
     public function toRelationships(Request $request)
     {

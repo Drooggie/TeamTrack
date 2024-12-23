@@ -38,7 +38,7 @@ class Employee extends Model
     protected $casts = [
         'id' => 'integer',
         'department_id' => 'integer',
-        'payment_type' => PaymentTypes::class,
+        'payment_type' => PaymentTypes::class
     ];
 
     // public function paychecks(): HasMany

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Action\Department\UpsertEmployeeAction;
+use App\Actions\Department\UpsertEmployeeAction;
 use App\DataTransferObjects\EmployeeData;
 use App\Http\Requests\UpsertEmployeeRequest;
 use App\Http\Resources\EmployeeResource;

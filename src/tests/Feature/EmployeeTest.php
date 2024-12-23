@@ -8,7 +8,7 @@ it('should create an employee', function () {
     $email = 'someEmail@mail.com';
     $departmentId = Department::factory()->create()->id;
     $jobTitle = 'Some Job Title';
-    $paymentType = PaymentTypes::SALARY;
+    $paymentType = 'salary';
     $salary = 1000000;
 
     $response = $this->postJson(route('v1.employees.store'), [
@@ -18,9 +18,7 @@ it('should create an employee', function () {
         'job_title' => $jobTitle,
         'payment_type' => $paymentType,
         'salary' => $salary
-    ])->json();
-
-    dd($response);
+    ])->json('data');
 
     expect($response)
         ->attributes->full_name->toBe($fullName)
