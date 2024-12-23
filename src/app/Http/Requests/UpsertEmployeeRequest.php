@@ -27,7 +27,7 @@ class UpsertEmployeeRequest extends FormRequest
     {
         return [
             'full_name' => ['required', 'string', 'max:100'],
-            'email' => ['required', Rule::unique('employees', 'email')->ignore($this->employee)],
+            'email' => ['required', 'email', Rule::unique('employees', 'email')->ignore($this->employee)],
             'department_id' => ['required', Rule::exists(Department::class, 'id')],
             'job_title' => ['required', 'string', 'max:100'],
             'payment_type' => ['required', new Enum(PaymentTypes::class)],
