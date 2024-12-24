@@ -26,7 +26,7 @@ class EmployeeController extends Controller
 
     public function upsert(UpsertEmployeeRequest $request, Employee $employee): Employee
     {
-        $data = new EmployeeData(...$request->validated());
+        $data = EmployeeData::fromRequest($request);
 
         return $this->upsertEmployee->execute($employee, $data);
     }

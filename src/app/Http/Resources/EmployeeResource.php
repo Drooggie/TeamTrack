@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Employee;
+use App\ValueObjects\Money;
 use Illuminate\Http\Request;
 use TiMacDonald\JsonApi\JsonApiResource;
 use TiMacDonald\JsonApi\Link;
@@ -12,6 +12,7 @@ class EmployeeResource extends JsonApiResource
 
     public function toAttributes(Request $request)
     {
+
         return [
             'full_name' => $this->full_name,
             'email' => $this->email,
@@ -20,12 +21,10 @@ class EmployeeResource extends JsonApiResource
             'payment_type' => [
                 'type' => $this->payment_type->type(),
                 'amount' => [
-                    'cent' => $this->payment_type->amount(),
-                    'montly' => $this->payment_type->monthlyAmount()
+                    'cents' => (new Money($this->payment_type->amount()))->toCents(),
+                    'dollars' => (new Money($this->payment_type->amount()))->toDollars(),
                 ]
             ],
-            'salary' => $this->salary,
-            'hourly_rate' => $this->hourly_rate
         ];
     }
 

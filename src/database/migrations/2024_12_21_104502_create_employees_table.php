@@ -19,8 +19,8 @@ return new class extends Migration
             $table->uuid('uuid');
             $table->string('full_name', 100);
             $table->string('email', 100)->unique()->index();
-            $table->foreignIdFor(Department::class)->constrained()->cascadeOnDelete();
-            $table->string('job_title', 50);
+            $table->foreignIdFor(Department::class)->constrained();
+            $table->string('job_title', 100);
             $table->string('payment_type', 20);
             $table->unsignedInteger('salary')->nullable();
             $table->unsignedInteger('hourly_rate')->nullable();

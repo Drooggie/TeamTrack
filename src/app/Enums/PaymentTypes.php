@@ -10,7 +10,7 @@ use App\Payments\Salary;
 enum PaymentTypes: string
 {
     case SALARY = 'salary';
-    case HOURLY_RATE = 'hourlyRate';
+    case HOURLY_RATE = 'hourly_rate';
 
     public function makePaymentType(Employee $employee): PaymentType
     {

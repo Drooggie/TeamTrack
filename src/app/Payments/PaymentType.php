@@ -7,7 +7,7 @@ use App\Models\Employee;
 abstract class PaymentType
 {
     public function __construct(
-        private readonly Employee $employee
+        protected readonly Employee $employee
     ) {}
 
     abstract public function monthlyAmount(): int;

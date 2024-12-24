@@ -6,16 +6,16 @@ class Salary extends PaymentType
 {
     public function monthlyAmount(): int
     {
-        return 5;
+        return $this->employee->salary / 12;
     }
 
     public function amount(): int
     {
-        return 5;
+        return $this->employee->salary;
     }
 
     public function type(): string
     {
-        return '4';
+        return 'salary';
     }
 }

@@ -18,21 +18,21 @@ class UpsertEmployeeRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+    public function getDepartment()
+    {
+        return Department::where('uuid', $this->department_id)->first();
+    }
+
     public function rules(): array
     {
         return [
             'full_name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', Rule::unique('employees', 'email')->ignore($this->employee)],
-            'department_id' => ['required', Rule::exists(Department::class, 'id')],
+            'department_id' => ['required', Rule::exists(Department::class, 'uuid')],
             'job_title' => ['required', 'string', 'max:100'],
             'payment_type' => ['required', new Enum(PaymentTypes::class)],
-            'salary' => ['nullable', 'sometimes', 'int'],
-            'hourly_rate' => ['nullable', 'sometimes', 'int'],
+            'salary' => ['nullable', 'sometimes', 'integer'],
+            'hourly_rate' => ['nullable', 'sometimes', 'integer'],
         ];
     }
 }

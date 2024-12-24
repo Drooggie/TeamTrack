@@ -6,16 +6,16 @@ class HourlyRate extends PaymentType
 {
     public function monthlyAmount(): int
     {
-        return 5;
+        return $this->employee->hourly_rate * 160;
     }
 
     public function amount(): int
     {
-        return 5;
+        return $this->employee->hourly_rate;
     }
 
     public function type(): string
     {
-        return '4';
+        return 'hourly_rate';
     }
 }
