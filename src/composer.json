@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.9",
         "predis/predis": "^2.0",
         "spatie/laravel-query-builder": "^6.3",
+        "spatie/laravel-queueable-action": "^2.15",
         "timacdonald/json-api": "dev-main"
     },
     "require-dev": {

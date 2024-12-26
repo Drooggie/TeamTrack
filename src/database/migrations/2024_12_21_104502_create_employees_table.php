@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuid('uuid');
             $table->string('full_name', 100);
             $table->string('email', 100)->unique()->index();
-            $table->foreignIdFor(Department::class)->constrained();
+            $table->string('department_id');
             $table->string('job_title', 100);
             $table->string('payment_type', 20);
             $table->unsignedInteger('salary')->nullable();

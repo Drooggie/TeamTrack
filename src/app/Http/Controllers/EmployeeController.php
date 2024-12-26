@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Actions\Department\UpsertEmployeeAction;
 use App\DataTransferObjects\EmployeeData;
-use App\Http\Requests\GetEmployeeRequest;
 use App\Http\Requests\UpsertEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;

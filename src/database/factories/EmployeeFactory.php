@@ -24,7 +24,7 @@ class EmployeeFactory extends Factory
         return [
             'full_name' => fake()->name(),
             'email' => fake()->safeEmail(),
-            'department_id' => Department::factory(),
+            'department_id' => fake()->uuid(),
             'job_title' => fake()->jobTitle(),
             'payment_type' => fake()->randomElement(['salary', 'hourly_rate']),
             'salary' => fake()->numberBetween(4000000, 14000000),

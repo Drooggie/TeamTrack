@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\PaymentTypes;
 use App\Models\Department;
 use App\Models\Employee;
 
@@ -96,4 +95,52 @@ it('should create employee with hourly rate payment_type', function () {
         ->attributes->payment_type->amount->cents->toBe(12 * 100)
         ->attributes->payment_type->amount->dollars->toBe('$12.00')
     ;
+});
+
+it('should return all employees from department', function () {
+    $development = Department::factory(['name' => 'Development'])->create();
+    $marketing = Department::factory(['name' => 'Marketing'])->create();
+
+    $developers = Employee::factory([
+        'department_id' => $development->id,
+    ])->count(5)->create();
+    Employee::factory([
+        'department_id' => $marketing->id
+    ])->count(2)->create();
+
+    $employees = $this->getJson(route('v1.department-employees.index', $development->uuid))
+        ->json('data');
+
+    $ids = array_map('strval', $developers->pluck('id')->toArray());
+
+    expect($employees)->toHaveCount(5);
+    expect($employees)
+        ->each(fn($employee) => $employee->id->toBeIn($ids));
+});
+
+it('should filter employees from department', function () {
+    $development = Department::factory(['name' => 'Development'])->create();
+    $marketing = Department::factory(['name' => 'Marketing'])->create();
+
+    Employee::factory([
+        'department_id' => $development->id,
+    ])->count(4)->create();
+    Employee::factory([
+        'department_id' => $marketing->id
+    ])->count(2)->create();
+
+    $developer = Employee::factory([
+        'full_name' => 'Test name',
+        'department_id' => $development->id,
+    ])->create();
+
+    $employees = $this->getJson(route('v1.department-employees.index', [
+        'departmentUuid' => $development->uuid,
+        'filter' => [
+            'full_name' => 'Test'
+        ]
+    ]))->json('data');
+
+    expect($employees)->toHaveCount(1);
+    expect($employees[0])->id->toBe((string) $developer->id);
 });
